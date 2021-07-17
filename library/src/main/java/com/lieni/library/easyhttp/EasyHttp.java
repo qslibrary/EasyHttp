@@ -15,7 +15,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EasyHttp {
-    private final LinkedHashMap<String, Object> apiCache = new LinkedHashMap<>();
+    private final LinkedHashMap<String, Object> apiCache = new LinkedHashMap<>(16, 0.75f, true);
     private volatile static EasyHttp instance;
     private static EasyBuilder builder;
     private final Retrofit retrofit;
@@ -65,7 +65,7 @@ public class EasyHttp {
         return instance;
     }
 
-    private <T> T get(Class<T> service) {
+    private synchronized <T> T get(Class<T> service) {
         if (apiCache.containsKey(service.getName())) {
             return (T) apiCache.get(service.getName());
         } else {
@@ -80,8 +80,8 @@ public class EasyHttp {
         if (apiCache.size() > max) {
             int index = 0;
             for (Map.Entry<String, Object> api : apiCache.entrySet()) {
-                index++;
-                if (index > max) apiCache.remove(api.getKey());
+                if (index++ < apiCache.size() - max) apiCache.remove(api.getKey());
+                else break;
             }
         }
     }
