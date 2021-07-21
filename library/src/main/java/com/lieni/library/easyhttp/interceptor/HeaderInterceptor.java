@@ -4,30 +4,27 @@ package com.lieni.library.easyhttp.interceptor;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.internal.http2.Header;
 
-public class HeaderInterceptor implements Interceptor {
-    private final List<Header> headers;
-
-    public HeaderInterceptor(List<Header> headers) {
-        this.headers = headers;
-    }
+public abstract class HeaderInterceptor implements Interceptor {
 
     @NotNull
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
         Request.Builder requestBuilder = original.newBuilder();
-        if (headers != null) {
-            for (Header header : headers) {
-                requestBuilder.header(header.name.toString(), header.value.toString());
-            }
+        Map<String, String> headers = new HashMap<>();
+        onAdd(headers);
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            requestBuilder.header(header.getKey(), header.getValue());
         }
         return chain.proceed(requestBuilder.build());
     }
+
+    public abstract void onAdd(Map<String, String> headers);
 }

@@ -3,14 +3,12 @@ package com.lieni.library.easyhttp;
 import android.content.Context;
 
 import com.lieni.library.easyhttp.cookie.CookieJarHelper;
-import com.lieni.library.easyhttp.interceptor.CodeInterceptor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
-import okhttp3.internal.http2.Header;
 import retrofit2.Converter;
 
 public class EasyBuilder {
@@ -19,7 +17,6 @@ public class EasyBuilder {
     private int connectTimeout=60000;
     private final String baseUrl;
     private final List<Interceptor> interceptors=new ArrayList<>();
-    private final List<Header> headers=new ArrayList<>();
     private Converter.Factory convertFactory;
     private boolean cache=false;
     private CookieJar cookieJar;
@@ -64,24 +61,6 @@ public class EasyBuilder {
     public EasyBuilder addInterceptor(Interceptor interceptor) {
         this.interceptors.add(interceptor);
         return this;
-    }
-
-    public EasyBuilder addCodeInterceptor(CodeInterceptor interceptor){
-        this.interceptors.add(interceptor);
-        return this;
-    }
-
-    public EasyBuilder addHeader(String key,String value) {
-        this.headers.add(new Header(key,value));
-        return this;
-    }
-    public EasyBuilder addHeaders(List<Header> headers) {
-        this.headers.addAll(headers);
-        return this;
-    }
-
-    public List<Header> getHeaders() {
-        return headers;
     }
 
     public boolean isCache() {

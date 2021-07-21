@@ -1,7 +1,6 @@
 package com.lieni.library.easyhttp;
 
 
-import com.lieni.library.easyhttp.interceptor.HeaderInterceptor;
 import com.lieni.library.easyhttp.logger.HttpLogger;
 
 import java.util.LinkedHashMap;
@@ -34,10 +33,6 @@ public class EasyHttp {
         //拦截器
         for (Interceptor interceptor : builder.getInterceptors()) {
             okHttpBuilder.addInterceptor(interceptor);
-        }
-        //请求头
-        if (builder.getHeaders().size() > 0) {
-            okHttpBuilder.addInterceptor(new HeaderInterceptor(builder.getHeaders()));
         }
         //日志
         if (builder.isLog()) {
