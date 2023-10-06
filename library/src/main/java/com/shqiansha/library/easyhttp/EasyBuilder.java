@@ -1,8 +1,8 @@
-package com.lieni.library.easyhttp;
+package com.shqiansha.library.easyhttp;
 
 import android.content.Context;
 
-import com.lieni.library.easyhttp.cookie.CookieJarHelper;
+import com.shqiansha.library.easyhttp.cookie.CookieJarHelper;
 
 import java.util.ArrayList;
 import java.util.List;

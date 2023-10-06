@@ -1,7 +1,7 @@
-package com.lieni.library.easyhttp;
+package com.shqiansha.library.easyhttp;
 
 
-import com.lieni.library.easyhttp.logger.HttpLogger;
+import com.shqiansha.library.easyhttp.logger.HttpLogger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
